@@ -1,0 +1,212 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+
+* {
+  scroll-behavior: smooth;
+}
+
+#loginbox {
+  background: rgb(239, 244, 245);
+  box-shadow: 10px 10px 15px 5px rgb(39, 38, 38);
+}
+
+#loginbox a {
+  color: black;
+  text-decoration: none;
+}
+
+#loginbox a:hover {
+  text-decoration: underline;
+  color: blue;
+}
+
+#signupbox {
+  background: rgb(239, 244, 245);
+  box-shadow: 10px 10px 15px 5px rgb(39, 38, 38);
+}
+
+#carouselmy img {
+  height: 100vh;
+}
+
+#carouselmy span {
+  font-family: cursive;
+}
+
+#footer {
+  background: #F8F9FA;
+  border-top: 1px solid rgb(64, 66, 64);
+}
+
+#footer a {
+  color: darkcyan;
+}
+
+#footer a:hover {
+  color: blue;
+}
+
+#firstcarousel {
+  bottom: 50%;
+  left: 50%;
+  color: rgb(43, 32, 32);
+}
+
+#secondcarousel {
+  bottom: 10%;
+  left: 50%;
+  color: rgb(19, 15, 15);
+}
+
+#thirdcarousel {
+  bottom: 50%;
+  left: 65%;
+  color: rgb(255, 255, 255);
+}
+
+#fourthcarousel {
+  bottom: 60%;
+  left: 50%;
+  color: rgb(46, 58, 36);
+}
+
+#aboutusimg {
+  background-image: url('../public/images/aboutus.jpg');
+  background-size: cover;
+  background-position: center;
+  box-shadow: 10px 10px 15px gray;
+}
+
+#aboutusimg h3 {
+  margin-top: 30px;
+  color: rgb(58, 18, 18);
+  text-align: center;
+  font-family: cursive;
+}
+
+#ourimages img {
+  height: 100%;
+  width: 100%;
+  box-shadow: 10px 10px 50px rgb(121, 101, 63);
+  border-radius: 1%;
+}
+
+#ourcaption {
+  position: relative;
+  overflow: hidden;
+}
+
+#ourcaption i {
+  color: white;
+  padding: 8px;
+}
+
+#ourcaption h3 {
+  color: orange;
+}
+
+#ourcaption i:hover {
+  background-color: rgb(77, 77, 230);
+  padding: 8px;
+  border-radius: 50%;
+}
+
+#ourcaption:hover .captionour {
+  top: 0;
+}
+
+.captionour {
+  position: absolute;
+  top: 100%;
+  left: 4%;
+  height: 100%;
+  width: 93%;
+  color: white;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
+  transition: all 0.5s;
+  border-radius: 1%;
+}
+
+#bikelistimg {
+  background-image: url('../public/images/bikelist.PNG');
+  background-size: cover;
+  width: 100%;
+  height: 50vh;
+}
+
+#bikelistimg h1 {
+  position: relative;
+  color: aliceblue;
+  text-align: center;
+  top: 50%;
+  font-size: 50px;
+  font-weight: 600;
+}
+
+#bikelistimg h4 {
+  position: relative;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  top: 50%;
+  font-weight: 600;
+}
+
+#him {
+  background-image: url('../public/images/carousel4.jpg');
+  background-size: 100%;
+  background-position: center;
+}
+
+.booke {
+  transition: all 1s;
+}
+
+.booke:hover {
+  background-color: white;
+  color: black;
+}
+
+nav .navbar-brand {
+  animation-duration: 7s;
+}
+
+body {
+  font-family: serif;
+}
+
+#dati .modal-content {
+  background: rgb(239, 244, 245);
+  box-shadow: 10px 10px 15px 5px rgb(39, 38, 38);
+}
+
+.feedb {
+  background: rgb(239, 244, 245);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e3770;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}

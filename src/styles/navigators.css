@@ -1,0 +1,21 @@
+ul li {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+}
+
+ul li span {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 3px;
+    background-color: darkblue;
+    transition: all 1s;
+}
+
+ul li:hover span{
+    width: 100% !important;
+    background-color: rebeccapurple!important;
+}
