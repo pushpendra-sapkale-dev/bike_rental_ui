@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import '../styles/navigators.css';
-import axios from 'axios';
+import * as auth from '../services/authService';
 
 export const Navigator = () => {
 
@@ -23,23 +23,9 @@ export const Navigator = () => {
       email: event.target.email.value,
       password: event.target.password.value
     }
-    console.log(userObj);
-    const regUrl = "http://localhost:3000/login";
-    axios.post(regUrl, userObj).then((response) => {
-      console.log(response)
-      if (response.data.status === 'Email is not exists') {
-        alert('Email is not exist !!');
-      }
-      else {
-        if (response.data.status === 'Password is incorrect !!') {
-          alert('Password is incorrect !!')
-        }
-        else {
-          modalCloseBtn.current.click();
-          event.target.reset();
-        }
-      }
-    })
+    console.log(auth)
+    // Validations and logic is in auth service
+    auth.loginCheck(userObj, modalCloseBtn, event);
   }
 
   function handleSignUp(event) {
@@ -54,22 +40,8 @@ export const Navigator = () => {
       confirmpassword: event.target.confirmpassword.value,
       date: event.target.date.value
     }
-    if (userObj.password === userObj.confirmpassword) {
-      const regUrl = "http://localhost:3000/register";
-      axios.post(regUrl, userObj).then((response) => {
-        console.log(response)
-        if (response.data.status === 'Email already exist !!') {
-          alert('Email address is already exist !!');
-        }
-        else {
-          modalSignUpCloseBtn.current.click();
-          event.target.reset();
-        }
-      })
-    }
-    else {
-      alert('password and confirm password should be same');
-    }
+    // All the validations and logics are in auth service
+    auth.signUpCheck(userObj, modalSignUpCloseBtn, event);
     console.log(userObj);
   }
 
@@ -105,7 +77,7 @@ export const Navigator = () => {
                 <span></span>
               </li>
               <li className="nav-item">
-                <a className="nav-link px-3" href="#" data-bs-toggle="modal" data-bs-target="#login">Login/register</a>
+                <a className="nav-link px-3" href="/#" data-bs-toggle="modal" data-bs-target="#login">Login/register</a>
                 <span></span>
               </li>
             </ul>
@@ -131,8 +103,8 @@ export const Navigator = () => {
                 <input id='email' name='email' type="email" placeholder="Enter Your Email" className="form-control my-2" required />
                 <label htmlFor='password' className="form-label mt-3 mb-0">Password</label>
                 <input id='password' name='password' type="password" placeholder="Enter Your Password" className="form-control my-2 mb-3" required />
-                <a href="#" className data-bs-toggle="modal" data-bs-target="#signup">Don't have a account ?</a>
-                <div className="col"><a href="#" className>Forgot password ?</a></div>
+                <a href="/#" className data-bs-toggle="modal" data-bs-target="#signup">Don't have a account ?</a>
+                <div className="col"><a href="/#" className>Forgot password ?</a></div>
                 <button type="submit" className="btn btn-success mt-2">Log in</button>
                 <button type="button" className="btn btn-secondary mt-2 ms-2" data-bs-dismiss="modal">Close</button>
               </form>
@@ -161,23 +133,23 @@ export const Navigator = () => {
                 <input id='lastname' name='lastname' type="text" placeholder="Enter Your Last Name" className="form-control py-1 my-2" title="Please Enter Valid Last Name" minLength={3} pattern="^[a-zA-Z]*$" required />
                 <label htmlFor='mobileno' className="form-label my-0">Mobile Number<span className="text-danger">*</span></label>
                 <input id='mobileno' name='mobileno' type="text" placeholder="Enter Your Mobile Number" className="form-control py-1 my-2" title="Please Enter Valid Phone Number" minLength={10} maxLength={10} pattern="^[0-9]*$" required />
-                <label htmlFor='email' className="form-label my-0">Email Adress<span className="text-danger">*</span></label>
-                <input id='email' name='email' type="email" placeholder="Enter Your Email Adress" className="form-control py-1 my-2" title="Please Enter A Valid Email" required />
+                <label htmlFor='emailSignup' className="form-label my-0">Email Adress<span className="text-danger">*</span></label>
+                <input id='emailSignup' name='email' type="email" placeholder="Enter Your Email Adress" className="form-control py-1 my-2" title="Please Enter A Valid Email" required />
                 <label htmlFor='gender' className="form-label my-0">Gender<span className="text-danger">*</span></label>
                 <select id='gender' name='gender' className="form-select mt-1 form-select-sm" aria-label="Default select example" title="Please Select One Of Above" required>
                   <option value>none</option>
-                  <option value={'male'}>Male</option>
-                  <option value={'female'}>Female</option>
-                  <option value={'others'}>Others</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="others">Others</option>
                 </select>
                 <label htmlFor='date' className="form-label my-0 mt-1">Date Of Birth<span className="text-danger">*</span></label>
                 <input id='date' name='date' type="date" className="form-control py-1 my-2" title="Please Fill It Properly" required />
-                <label htmlFor='password' className="form-label my-0">Password<span className="text-danger">*</span></label>
-                <input id='password' name='password' type="password" pattern="(?=.*d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppwecase and lowercase letter, and at least 8 or more characters" placeholder="Example: 1@Aabcde" className="form-control py-1 my-2" required />
+                <label htmlFor='passwordSignup' className="form-label my-0">Password<span className="text-danger">*</span></label>
+                <input id='passwordSignup' name='password' type="password" pattern="(?=.*d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppwecase and lowercase letter, and at least 8 or more characters" placeholder="Example: 1@Aabcde" className="form-control py-1 my-2" required />
                 <label htmlFor='confirmpassword' className="form-label my-0">Confirm Password<span className="text-danger">*</span></label>
                 <input id='confirmpassword' name='confirmpassword' type="password" pattern="(?=.*d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppwecase and lowercase letter, and at least 8 or more characters" placeholder="Example: 1@Aabcde" className="form-control py-1 my-2" required />
                 <input type="checkbox" required className="form-check-input mt-2" />
-                <label className="mt-1">I Agree With <a href="#">Terms &amp; conditions</a></label>
+                <label className="mt-1">I Agree With <a href="/#">Terms &amp; conditions</a></label>
                 <div className="col-12">
                   <input type="submit" defaultValue="Sign Up" className="btn btn-success my-3" />
                   <button className="btn btn-secondary my-3 ms-2" data-bs-dismiss="modal">Close</button>

@@ -7,7 +7,7 @@ import { Hero } from './bike-list/Hero';
 import { Kawasaki } from './bike-list/Kawasaki';
 
 
-export const BikeInfo = () => {
+const BikeInfo = () => {
   let bike_name = useParams().bike_name;
   return (
     <div>
@@ -16,27 +16,27 @@ export const BikeInfo = () => {
       {/* Royal */}
 
 
-      {bike_name == 'royal' ? <Royal /> : null}
+      {bike_name === 'royal' ? <Royal /> : null}
 
 
       {/* Himalayan */}
 
-      {bike_name == 'himalayan' ? <Himalayan /> : null}
+      {bike_name === 'himalayan' ? <Himalayan /> : null}
 
 
       {/* Triumph */}
 
-      {bike_name == 'triumph' ? <Triumph /> : null}
+      {bike_name === 'triumph' ? <Triumph /> : null}
 
 
       {/* Hero */}
 
-      {bike_name == 'hero' ? <Hero /> : null}
+      {bike_name === 'hero' ? <Hero /> : null}
 
 
       {/* Kawasaki */}
 
-      {bike_name == 'kawasaki' ? <Kawasaki /> : null}
+      {bike_name === 'kawasaki' ? <Kawasaki /> : null}
 
 
 
@@ -53,7 +53,7 @@ export const BikeInfo = () => {
               <div>
                 <label htmlFor='end-date' className="form-label mt-2 mx-auto">End Date<span className="text-danger"> *</span></label>
                 <input id='end-date' name='end-date' type="date" className="form-control" required />
-              </div> 
+              </div>
               <div>
                 <label htmlFor='licence' className="form-label mt-2 mx-auto">Driving Licence Number<span className="text-danger"> *</span></label>
                 <input id='licence' name='licence' type="text" placeholder="Enter Your Driving Licence Number Here" className="form-control" required />
@@ -70,3 +70,5 @@ export const BikeInfo = () => {
     </div>
   )
 }
+
+export default BikeInfo;

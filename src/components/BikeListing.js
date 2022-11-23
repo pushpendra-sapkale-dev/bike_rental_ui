@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-export const BikeListing = () => {
+const BikeListing = () => {
   return (
     <div className='py-5'>
       {/* Bike list */}
@@ -79,3 +79,5 @@ export const BikeListing = () => {
     </div>
   )
 }
+
+export default BikeListing;
