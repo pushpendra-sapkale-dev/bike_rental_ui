@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { ProfileLogo } from './ProfileLogo';
 import '../styles/navigators.css';
 import * as auth from '../services/authService';
 
 export const Navigator = () => {
+
+  const [isLoggedIn, setIsLoggedIn] = useState(null);
+
+  useEffect(() => {
+    setIsLoggedIn(auth.loginCheckOnly());
+  }, []);
+
 
   const modalCloseBtn = React.useRef(null);
 
@@ -24,9 +31,11 @@ export const Navigator = () => {
       email: event.target.email.value,
       password: event.target.password.value
     }
-    console.log(auth)
     // Validations and logic is in auth service
     auth.loginCheck(userObj, modalCloseBtn, event);
+    setTimeout(() => {
+      setIsLoggedIn(auth.loginCheckOnly());
+    }, 1000);
   }
 
   function handleSignUp(event) {
@@ -43,7 +52,9 @@ export const Navigator = () => {
     }
     // All the validations and logics are in auth service
     auth.signUpCheck(userObj, modalSignUpCloseBtn, event);
-    console.log(userObj);
+     setTimeout(() => {
+      setIsLoggedIn(auth.loginCheckOnly());
+    }, 1000);
   }
 
   return (
@@ -77,11 +88,11 @@ export const Navigator = () => {
                 <NavLink style={navLinkStyle} className="nav-link px-3" to={'/contact-us'}>Contact us</NavLink>
                 <span></span>
               </li>
-              <li className="nav-item">
+              {!isLoggedIn ? <li className="nav-item">
                 <a className="nav-link px-3" href="/#" data-bs-toggle="modal" data-bs-target="#login">Login/register</a>
                 <span></span>
-              </li>
-              <ProfileLogo />
+              </li> : null}
+              {isLoggedIn ? <ProfileLogo /> : null}
             </ul>
           </div>
         </div>
