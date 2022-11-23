@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { ProfileLogo } from './ProfileLogo';
 import '../styles/navigators.css';
 import * as auth from '../services/authService';
 
@@ -80,6 +81,7 @@ export const Navigator = () => {
                 <a className="nav-link px-3" href="/#" data-bs-toggle="modal" data-bs-target="#login">Login/register</a>
                 <span></span>
               </li>
+              <ProfileLogo />
             </ul>
           </div>
         </div>

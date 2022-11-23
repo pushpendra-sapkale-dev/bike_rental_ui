@@ -64,5 +64,6 @@ function signUpCheck(obj, modalSignUpCloseBtn, event) {
 export {
     loginCheck,
     signUpCheck,
-    loginCheckOnly
+    loginCheckOnly,
+    logOut
 }
