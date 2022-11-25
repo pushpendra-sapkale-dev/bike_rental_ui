@@ -62,7 +62,8 @@ const BikeInfo = () => {
                 <label htmlFor='national-id' className="form-label mt-2 mx-auto">National Id<span className="text-danger"> *</span></label>
                 <input id='national-id' name='national-id' type="text" placeholder="Enter Your National Id Number Here" className="form-control" required />
               </div>
-              <input type="submit" defaultValue="Submit" className="my-3 btn btn-success rounded-pill px-md-5" />
+              <input type="submit" defaultValue="Submit" className="mt-4 mb-3 btn btn-success rounded-pill px-md-5" />
+              <button type='button' data-bs-dismiss="modal" className='ms-3 mb-3 mt-4 px-md-5 rounded-pill btn btn-secondary'>Close</button>
             </form>
           </div>
         </div>

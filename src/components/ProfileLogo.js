@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import * as auth from '../services/authService';
 
-export const ProfileLogo = () => {
+export const ProfileLogo = (props) => {
     const [showProfileMenu, setProfileMenu] = useState(false);
 
     const styles = {
@@ -50,7 +49,7 @@ export const ProfileLogo = () => {
                         <a href className="list-group-item list-group-item-action">
                             Help
                         </a>
-                        <a onClick={auth.logOut} href className="list-group-item list-group-item-action">
+                        <a onClick={()=>props.handleLoggedOutStatus(false)} href className="list-group-item list-group-item-action">
                             Logout
                         </a>
                     </div>

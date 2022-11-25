@@ -25,6 +25,13 @@ export const Navigator = () => {
     }
   }
 
+  function handleLoggedOutStatus(status) {
+    if (!status) {
+      auth.logOut();
+      setIsLoggedIn(false);
+    }
+  }
+
   function handleLogIn(event) {
     event.preventDefault();
     const userObj = {
@@ -32,10 +39,11 @@ export const Navigator = () => {
       password: event.target.password.value
     }
     // Validations and logic is in auth service
-    auth.loginCheck(userObj, modalCloseBtn, event);
-    setTimeout(() => {
+    auth.loginCheck(userObj, modalCloseBtn, event).then(() => {
       setIsLoggedIn(auth.loginCheckOnly());
-    }, 1000);
+    }).catch(() => {
+      console.log('Error In Login .....')
+    });
   }
 
   function handleSignUp(event) {
@@ -51,10 +59,9 @@ export const Navigator = () => {
       date: event.target.date.value
     }
     // All the validations and logics are in auth service
-    auth.signUpCheck(userObj, modalSignUpCloseBtn, event);
-     setTimeout(() => {
+    auth.signUpCheck(userObj, modalSignUpCloseBtn, event).then(()=>{
       setIsLoggedIn(auth.loginCheckOnly());
-    }, 1000);
+    }).catch(console.log('Error in signup .....'));
   }
 
   return (
@@ -92,7 +99,7 @@ export const Navigator = () => {
                 <a className="nav-link px-3" href="/#" data-bs-toggle="modal" data-bs-target="#login">Login/register</a>
                 <span></span>
               </li> : null}
-              {isLoggedIn ? <ProfileLogo /> : null}
+              {isLoggedIn ? <ProfileLogo handleLoggedOutStatus={handleLoggedOutStatus} /> : null}
             </ul>
           </div>
         </div>
