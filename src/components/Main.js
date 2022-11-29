@@ -1,7 +1,25 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import * as dataShareService from '../services/dataShareService';
 
 const Main = () => {
+
+  function submitFeedback(event) {
+    event.preventDefault();
+    const feedbackObj = {
+      name: event.target.name.value,
+      email: event.target.email.value,
+      feedback: event.target.feedback.value
+    }
+    console.log(feedbackObj);
+    dataShareService.sendFeedbackData(feedbackObj).then(() => {
+      alert('Feedback successfully submitted .....');
+      event.target.reset();
+    }).catch(() => {
+      alert('Please try after sometime .....');
+    });
+  }
+
   return (
     <div className='py-5'>
       {/*     Start Carousel     */}
@@ -84,7 +102,7 @@ const Main = () => {
       <div className="container mt-md-5">
         <div className="row">
           <div className="col-md-5 me-auto">
-            <img src="images/img3.PNG" className="img-fluid" />
+            <img src="images/img3.PNG" className="img-fluid" alt='loading ...' />
           </div>
           <div className="col-md-5">
             <h1 className="heading1">Sanitized Vehicle</h1>
@@ -115,7 +133,7 @@ const Main = () => {
       {/*     End Camp     */}
       {/*     Start How To Use     */}
       <div className="container-fluid mt-md-5 py-md-5">
-        <img src="images/how_to_use.PNG" width="100%" />
+        <img src="images/how_to_use.PNG" width="100%" alt='loading ...' />
       </div>
       {/*     End How To Use     */}
       {/*     Button     */}
@@ -133,18 +151,18 @@ const Main = () => {
         <div className="row">
           <div className="col-md-5 rounded border border-dark feedb">
             <h1 className="text-center heading1">Feedback</h1><h1>
-              <form>
+              <form onSubmit={submitFeedback}>
                 <div>
-                  <label className="form-label my-0 fs-4">Name<span className="text-danger">*</span></label>
-                  <input type="text" placeholder="Enter Your Name" className="form-control py-1 my-2" title="Please Enter Valid Name" minLength={3} pattern="^[a-zA-Z]*$" required />
+                  <label htmlFor='name1' className="form-label my-0 fs-4">Name<span className="text-danger">*</span></label>
+                  <input name='name' id='name1' type="text" placeholder="Enter Your Name" className="form-control py-1 my-2" title="Please Enter Valid Name" minLength={3} pattern="^[a-zA-Z]*$" required />
                 </div>
                 <div>
-                  <label className="form-label my-0 fs-4">Email Adress<span className="text-danger">*</span></label>
-                  <input type="email" placeholder="Enter Your Email Adress" className="form-control py-1 my-2" title="Please Enter A Valid Email" required />
+                  <label htmlFor='email1' className="form-label my-0 fs-4">Email Adress<span className="text-danger">*</span></label>
+                  <input name='email' id='email1' type="email" placeholder="Enter Your Email Adress" className="form-control py-1 my-2" title="Please Enter A Valid Email" required />
                 </div>
                 <div>
-                  <label htmlFor className="form-label fs-4">Feedback<span className="text-danger"> * </span> </label>
-                  <textarea className="form-control" placeholder="Message" rows={5} required/>
+                  <label htmlFor='feedback' className="form-label fs-4">Feedback<span className="text-danger"> * </span> </label>
+                  <textarea name='feedback' id='feedback' className="form-control" placeholder="Message" rows={5} required />
                 </div>
                 <button type="submit" className="mt-3 btn btn-primary rounded-pill px-md-5">Submit</button>
               </form>
