@@ -1,6 +1,11 @@
 import React from 'react'
 
-export const Hero = () => {
+export const Hero = (props) => {
+
+  function handleBookClick() {
+    props.sendOpenModalType();
+  }
+
   return (
     <div>
               <div className="container-fluid py-5">
@@ -40,7 +45,7 @@ export const Hero = () => {
             <h4>Fuel Tank Capacity : 13 L</h4>
             <h4>One Day Price</h4>
             <h4><i className="fa fa-inr" aria-hidden="true" /> 2100</h4>
-            <a href="#" data-bs-target="#dati" data-bs-toggle="modal"><button className="btn btn-success btn-lg mt-md-5">Book Now</button></a>
+            <button className="btn btn-success btn-lg mt-md-5" onClick={handleBookClick}>Book Now</button>
           </div>
         </div>
       </div>

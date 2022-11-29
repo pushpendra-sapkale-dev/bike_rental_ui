@@ -1,9 +1,14 @@
 import React from 'react'
 
-export const Kawasaki = () => {
+export const Kawasaki = (props) => {
+
+  function handleBookClick() {
+    props.sendOpenModalType();
+  }
+
   return (
     <div>
-         <div className="container-fluid py-5">
+      <div className="container-fluid py-5">
         <div className="row align-items-end">
           <div className="col-md-4">
             <img src="images/bikes/kawasaki/kawasaki1.PNG" height="70%" width="100%" alt="" />
@@ -20,7 +25,7 @@ export const Kawasaki = () => {
             <div className="col">
               <h1>About Bike</h1>
               <p className="fs-4">The Kawasaki KLX 110 is powered by a 112 cc air-cooled engine which
-                produces of power, It has a fuel tank of 3.8 L. 
+                produces of power, It has a fuel tank of 3.8 L.
                 It can develop a power of 7.3 PS and a torque of 8.0 Nm. It comes with rear
                 drum brakes, This bike weighs 76 kg and has a fuel
                 tank capacity of 15 liters
@@ -41,7 +46,7 @@ export const Kawasaki = () => {
             <h4>Fuel Tank Capacity : 3.8 L</h4>
             <h4>One Day Price</h4>
             <h4><i className="fa fa-inr" aria-hidden="true" /> 1500</h4>
-            <a href="#" data-bs-target="#dati" data-bs-toggle="modal"><button className="btn btn-success btn-lg mt-md-5">Book Now</button></a>
+            <button className="btn btn-success btn-lg mt-md-5" onClick={handleBookClick}>Book Now</button>
           </div>
         </div>
       </div>

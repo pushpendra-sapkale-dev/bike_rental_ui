@@ -1,7 +1,11 @@
 import React from 'react';
-import * as auth from '../../services/authService';
 
-export const Royal = () => {
+export const Royal = (props) => {
+
+  function handleBookClick() {
+    props.sendOpenModalType();
+  }
+
   return (
     <div>
       <div className="container-fluid py-5">
@@ -40,7 +44,7 @@ export const Royal = () => {
             <h4>Fuel Tank Capacity : 13.5 L</h4>
             <h4>One Day Price</h4>
             <h4><i className="fa fa-inr" aria-hidden="true" /> 1900</h4>
-            <a href data-bs-toggle="modal" data-bs-target={auth.loginCheckOnly() ? '#dati' : '#login'}><button className="btn btn-success btn-lg mt-md-5">Book Now</button></a>
+            <button className="btn btn-success btn-lg mt-md-5" onClick={handleBookClick}>Book Now</button>
           </div>
         </div>
       </div>

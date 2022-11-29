@@ -1,14 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Royal } from './bike-list/Royal';
 import { Himalayan } from './bike-list/Himalayan';
 import { Triumph } from './bike-list/Triumph';
 import { Hero } from './bike-list/Hero';
 import { Kawasaki } from './bike-list/Kawasaki';
+import * as auth from '../services/authService';
 
 
 const BikeInfo = () => {
   let bike_name = useParams().bike_name;
+  const modalPopUpBtn = React.useRef(null);
+
+  // Getting open modal type status from child components
+  function getOpenModalType() {
+    const status = auth.loginCheckOnly() ? '#date-time' : '#login';
+    document.getElementById('modal-btn').setAttribute('data-bs-target', status);
+    modalPopUpBtn.current.click();
+  }
+
   return (
     <div>
       {/*     Start Bike Details     */}
@@ -16,32 +26,35 @@ const BikeInfo = () => {
       {/* Royal */}
 
 
-      {bike_name === 'royal' ? <Royal /> : null}
+      {bike_name === 'royal' ? <Royal sendOpenModalType={getOpenModalType} /> : null}
 
 
       {/* Himalayan */}
 
-      {bike_name === 'himalayan' ? <Himalayan /> : null}
+      {bike_name === 'himalayan' ? <Himalayan sendOpenModalType={getOpenModalType} /> : null}
 
 
       {/* Triumph */}
 
-      {bike_name === 'triumph' ? <Triumph /> : null}
+      {bike_name === 'triumph' ? <Triumph sendOpenModalType={getOpenModalType} /> : null}
 
 
       {/* Hero */}
 
-      {bike_name === 'hero' ? <Hero /> : null}
+      {bike_name === 'hero' ? <Hero sendOpenModalType={getOpenModalType} /> : null}
 
 
       {/* Kawasaki */}
 
-      {bike_name === 'kawasaki' ? <Kawasaki /> : null}
+      {bike_name === 'kawasaki' ? <Kawasaki sendOpenModalType={getOpenModalType} /> : null}
 
+
+      {/* This button is invisible only for open modal */}
+      <a href data-bs-toggle="modal" id='modal-btn' ref={modalPopUpBtn} className='visually-hidden'><button className="btn btn-success btn-lg mt-md-5">Book Now</button></a>
 
 
       {/*     Date & Time */}
-      <div className="modal fade" id="dati">
+      <div className="modal fade" id="date-time">
         <div className="modal-dialog">
           <div className="modal-content p-5">
             <h2>Please Select Date For Journey</h2>
