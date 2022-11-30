@@ -4,8 +4,11 @@ const API_URL = 'http://localhost:3000';
 
 const loginCheckOnly = () => localStorage.getItem('token');
 
+const getUserId = () => localStorage.getItem('id');
+
 function logOut() {
     localStorage.removeItem('token');
+    localStorage.removeItem('id');
     // window.location.reload();
 }
 
@@ -27,6 +30,7 @@ function loginCheck(obj, modalCloseBtn, event) {
                         modalCloseBtn.current.click();
                         event.target.reset();
                         localStorage.setItem('token', response.data.auth);
+                        localStorage.setItem('id', response.data.user_id);
                         res();
                     }
                     else {
@@ -52,6 +56,7 @@ function signUpCheck(obj, modalSignUpCloseBtn, event) {
                 else {
                     if (response.data.status === 'User created successfully') {
                         localStorage.setItem('token', response.data.auth);
+                        localStorage.setItem('id', response.data.user_id);
                         modalSignUpCloseBtn.current.click();
                         event.target.reset();
                         res();
@@ -74,5 +79,6 @@ export {
     loginCheck,
     signUpCheck,
     loginCheckOnly,
-    logOut
+    logOut,
+    getUserId
 }

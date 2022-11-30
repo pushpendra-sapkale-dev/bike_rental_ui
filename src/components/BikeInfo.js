@@ -6,17 +6,39 @@ import { Triumph } from './bike-list/Triumph';
 import { Hero } from './bike-list/Hero';
 import { Kawasaki } from './bike-list/Kawasaki';
 import * as auth from '../services/authService';
+import * as dataShareService from '../services/dataShareService';
 
 
 const BikeInfo = () => {
   let bike_name = useParams().bike_name;
   const modalPopUpBtn = React.useRef(null);
+  const modalPopUpCloseBtn = React.useRef(null);
 
   // Getting open modal type status from child components
   function getOpenModalType() {
     const status = auth.loginCheckOnly() ? '#date-time' : '#login';
     document.getElementById('modal-btn').setAttribute('data-bs-target', status);
     modalPopUpBtn.current.click();
+  }
+
+  function submitBooking(event) {
+    event.preventDefault();
+    console.log(event.target.value);
+    const bookObj = {
+      user_id: auth.getUserId(),
+      bike_name: bike_name,
+      start_date: event.target.start_date.value,
+      end_date: event.target.end_date.value,
+      licence: event.target.licence.value,
+      national_id: event.target.national_id.value
+    }
+    dataShareService.bookBike(bookObj).then(() => {
+      alert('Bike booked successfully');
+      event.target.reset();
+      modalPopUpCloseBtn.current.click();
+    }).catch(() => {
+      alert('Error in booking bike please try after sometime');
+    });
   }
 
   return (
@@ -58,14 +80,17 @@ const BikeInfo = () => {
         <div className="modal-dialog">
           <div className="modal-content p-5">
             <h2>Please Select Date For Journey</h2>
-            <form>
+            <form onSubmit={submitBooking}>
+              <div className='bg-secondary text-light p-1 rounded fs-4 mt-2 text-center text-capitalize'>
+                {bike_name}
+              </div>
               <div>
                 <label htmlFor='start-date' className="form-label mt-2">Start Date<span className="text-danger"> *</span></label>
-                <input id='start-date' name='start-date' type="date" className="form-control" required />
+                <input id='start-date' name='start_date' type="date" className="form-control" required />
               </div>
               <div>
                 <label htmlFor='end-date' className="form-label mt-2 mx-auto">End Date<span className="text-danger"> *</span></label>
-                <input id='end-date' name='end-date' type="date" className="form-control" required />
+                <input id='end-date' name='end_date' type="date" className="form-control" required />
               </div>
               <div>
                 <label htmlFor='licence' className="form-label mt-2 mx-auto">Driving Licence Number<span className="text-danger"> *</span></label>
@@ -73,10 +98,10 @@ const BikeInfo = () => {
               </div>
               <div>
                 <label htmlFor='national-id' className="form-label mt-2 mx-auto">National Id<span className="text-danger"> *</span></label>
-                <input id='national-id' name='national-id' type="text" placeholder="Enter Your National Id Number Here" className="form-control" required />
+                <input id='national-id' name='national_id' type="text" placeholder="Enter Your National Id Number Here" className="form-control" required />
               </div>
               <input type="submit" defaultValue="Submit" className="mt-4 mb-3 btn btn-success rounded-pill px-md-5" />
-              <button type='button' data-bs-dismiss="modal" className='ms-3 mb-3 mt-4 px-md-5 rounded-pill btn btn-secondary'>Close</button>
+              <button type='button' ref={modalPopUpCloseBtn} data-bs-dismiss="modal" className='ms-3 mb-3 mt-4 px-md-5 rounded-pill btn btn-secondary'>Close</button>
             </form>
           </div>
         </div>

@@ -8,6 +8,7 @@ const ContactUs = React.lazy(() => import('./ContactUs'));
 const FAQs = React.lazy(() => import('./FAQs'));
 const BikeInfo = React.lazy(() => import('./BikeInfo'));
 const Main = React.lazy(() => import('./Main'));
+const ManageBooking = React.lazy(() => import('./ManageBooking'));
 
 export const Home = () => {
   return (
@@ -42,6 +43,11 @@ export const Home = () => {
         <Route path=":bike_name" element={
           <React.Suspense fallback='Loading .....'>
             <BikeInfo />
+          </React.Suspense>
+        } />
+        <Route path='manage-booking/:user_id' element={
+          <React.Suspense fallback='Loading .....'>
+            <ManageBooking />
           </React.Suspense>
         } />
       </Routes>

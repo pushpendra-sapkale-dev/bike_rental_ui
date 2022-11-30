@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import * as auth from '../services/authService';
 
 export const ProfileLogo = (props) => {
     const [showProfileMenu, setProfileMenu] = useState(false);
+
+    const navigate = useNavigate();
 
     const styles = {
         pyramid: {
@@ -26,6 +30,11 @@ export const ProfileLogo = (props) => {
         setProfileMenu(status);
     }
 
+    function goToManageBike() {
+        setProfileMenu(false);
+        navigate(`manage-booking/${auth.getUserId()}`);
+    }
+
     return (
         <li style={styles.pyramidWrapper} className="nav-item d-flex align-items-center justify-content-center">
             <svg onClick={() => { handleSetProfileMenu(!showProfileMenu) }} className='mx-3' xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" viewBox="0 0 16 16">
@@ -43,13 +52,13 @@ export const ProfileLogo = (props) => {
                         >
                             Profile
                         </a>
-                        <a href className="list-group-item list-group-item-action">
+                        <a href onClick={goToManageBike} className="list-group-item list-group-item-action">
                             Manage Booking
                         </a>
                         <a href className="list-group-item list-group-item-action">
                             Help
                         </a>
-                        <a onClick={()=>props.handleLoggedOutStatus(false)} href className="list-group-item list-group-item-action">
+                        <a onClick={() => props.handleLoggedOutStatus(false)} href className="list-group-item list-group-item-action">
                             Logout
                         </a>
                     </div>
