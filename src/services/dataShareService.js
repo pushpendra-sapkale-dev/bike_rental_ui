@@ -42,8 +42,23 @@ function getManageBookingList(obj) {
     });
 }
 
+function cancleBooking(id) {
+    return new Promise((res, rej) => {
+        const reqUrl = API_URL + '/cancle-booking';
+        axios.delete(reqUrl, { data: { id: id } }).then((response) => {
+            if (response.status === 'Error') {
+                rej();
+            }
+            else {
+                res();  
+            }
+        });
+    });
+}
+
 export {
     sendFeedbackData,
     bookBike,
-    getManageBookingList
+    getManageBookingList,
+    cancleBooking
 }

@@ -9,17 +9,17 @@ const ManageBooking = () => {
   let userId = useParams().user_id;
 
   useEffect(() => {
+    const getBikeBookingList = () => {
+      dataShareService.getManageBookingList({ user_id: userId }).then((data) => {
+        setBikeBookingDetails(data);
+        if (data.length > 0) {
+          setShowTableStatus(true);
+        }
+      }).catch();
+    }
     getBikeBookingList();
-  }, [])
+  }, [userId])
 
-  const getBikeBookingList = () => {
-    dataShareService.getManageBookingList({ user_id: userId }).then((data) => {
-      setBikeBookingDetails(data);
-      if (data.length > 0) {
-        setShowTableStatus(true);
-      }
-    }).catch();
-  }
 
   const styles = {
     header: {
@@ -48,8 +48,9 @@ const ManageBooking = () => {
       <div className='pt-4'>
         <h3 style={styles.subhead}>My Booking</h3>
       </div>
+      {/* Bike List Component */}
       <div className='py-5'>
-        {showTableStatus ? <ManageBookingUser bookingDetails={bikeBookingDetails} /> : <h3 className='text-primary text-center'>You do not have any booking !!</h3>}
+        {showTableStatus ? <ManageBookingUser bookingDetails={bikeBookingDetails} userId={userId}/> : <h3 className='text-primary text-center'>You do not have any booking !!</h3>}
       </div>
     </div>
   )
