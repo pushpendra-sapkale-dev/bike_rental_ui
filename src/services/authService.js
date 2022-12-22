@@ -5,6 +5,7 @@ import axios from 'axios';
 // For Production
 const API_URL = 'https://bike-rental-server.cyclic.app/';
 
+
 const loginCheckOnly = () => localStorage.getItem('token');
 
 const getUserId = () => localStorage.getItem('id');
