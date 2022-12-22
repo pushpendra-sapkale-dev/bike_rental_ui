@@ -3,7 +3,7 @@ import axios from 'axios';
 // const API_URL = 'http://localhost:3000';
 
 // For Production
-const API_URL = 'https://bike-rental-server.cyclic.app/';
+const API_URL = 'https://bike-rental-server.cyclic.app';
 
 
 const loginCheckOnly = () => localStorage.getItem('token');
