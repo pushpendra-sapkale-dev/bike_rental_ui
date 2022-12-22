@@ -10,7 +10,7 @@ export const ManageBookingUser = (props) => {
 
   useEffect(() => {
     setBikeBookingList(updateBikeList(bike_list_data));
-  }, []);
+  }, [bike_list_data]);
 
   console.log(props)
   const handleCancleBooking = (id) => {

@@ -1,8 +1,13 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import * as dataShareService from '../services/dataShareService';
+import { useSnackbar } from 'react-simple-snackbar';
+import * as snackbar from '../services/snackbarService';
 
 const Main = () => {
+
+  const [openSnackbarSuccess] = useSnackbar(snackbar.successStyle);
+  const [openSnackbarFail] = useSnackbar(snackbar.failStyle);
 
   function submitFeedback(event) {
     event.preventDefault();
@@ -14,9 +19,11 @@ const Main = () => {
     console.log(feedbackObj);
     dataShareService.sendFeedbackData(feedbackObj).then(() => {
       alert('Feedback successfully submitted .....');
+      openSnackbarSuccess('Feedback successfully submitted .....');
       event.target.reset();
-    }).catch(() => {
+    }).catch((errMsg) => {
       alert('Please try after sometime .....');
+      openSnackbarFail(errMsg);
     });
   }
 

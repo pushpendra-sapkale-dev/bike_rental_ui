@@ -7,7 +7,7 @@ function sendFeedbackData(obj) {
         const regUrl = API_URL + '/send-feedback';
         axios.post(regUrl, obj).then((response) => {
             if (response.status === 'Error in sending feedback') {
-                rej();
+                rej(response.status);
             }
             else {
                 res();
