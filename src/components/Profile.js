@@ -1,10 +1,10 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 
 
 const Profile = () => {
 
-    let userId = useParams().user_id;
+    // let userId = useParams().user_id;
 
 
     const styles = {

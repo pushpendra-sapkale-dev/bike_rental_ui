@@ -3,19 +3,28 @@ import { NavLink } from 'react-router-dom';
 import { ProfileLogo } from './ProfileLogo';
 import '../styles/navigators.css';
 import * as auth from '../services/authService';
+import { useSnackbar } from 'react-simple-snackbar'
+import * as snackbar from '../services/snackbarService';
 
 export const Navigator = () => {
+
+  useEffect(() => {
+    setIsLoggedIn(auth.loginCheckOnly());
+  }, []);
+
+  const [errorMessage, setErrorMessage] = useState(false);
+
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
+
+  const [openSnackbarSuccess] = useSnackbar(snackbar.successStyle);
+
+  // const [openSnackbarFail] = useSnackbar(snackbar.failStyle);
 
   const [isLoggedIn, setIsLoggedIn] = useState(null);
 
   const [logInLoader, setLogInLoader] = useState(false);
 
   const [signUpLoader, setSignUpLoader] = useState(false);
-
-  useEffect(() => {
-    setIsLoggedIn(auth.loginCheckOnly());
-  }, []);
-
 
   const modalCloseBtn = React.useRef(null);
 
@@ -27,6 +36,16 @@ export const Navigator = () => {
       color: isActive ? 'darkblue' : '',
       textDecoration: isActive ? 'underline' : ''
     }
+  }
+
+  function handleErrorMessage(message, status) {
+    setShowErrorMessage(status);
+    setErrorMessage(message);
+    // if (status) {
+    //   setTimeout(() => {
+    //     handleErrorMessage('', false);
+    //   }, 3000);
+    // }
   }
 
   function handleLoggedOutStatus(status) {
@@ -46,9 +65,13 @@ export const Navigator = () => {
     // Validations and logic is in auth service
     auth.loginCheck(userObj, modalCloseBtn, event).then(() => {
       setIsLoggedIn(auth.loginCheckOnly());
+      openSnackbarSuccess('Logged In Successfully');
       setLogInLoader(false);
-    }).catch(() => {
+      handleErrorMessage('', false);
+    }).catch((errMsg) => {
       console.log('Error In Login .....');
+      handleErrorMessage(errMsg, true);
+      // openSnackbarFail('Error in login please try after some time ...');
       setLogInLoader(false);
     });
   }
@@ -70,7 +93,9 @@ export const Navigator = () => {
     auth.signUpCheck(userObj, modalSignUpCloseBtn, event).then(() => {
       setIsLoggedIn(auth.loginCheckOnly());
       setSignUpLoader(false);
-    }).catch(() => {
+      openSnackbarSuccess('Account Created Successfully');
+    }).catch((errMsg) => {
+      handleErrorMessage(errMsg, true);
       console.log('Error in signup .....');
       setSignUpLoader(false);
     });
@@ -126,10 +151,15 @@ export const Navigator = () => {
               <div className="col-11 text-secondary">
                 <h1>Log in</h1>
               </div>
-              <div className="col-1"><button ref={modalCloseBtn} type="button" className="btn btn-close bg-light" data-bs-dismiss="modal" />
+              <div className="col-1"><button ref={modalCloseBtn} onClick={() => { handleErrorMessage('', false) }} type="button" className="btn btn-close bg-light" data-bs-dismiss="modal" />
               </div>
             </div>
             <div className="modal-body py-4">
+              {showErrorMessage ?
+                <div className='alert alert-danger'>{errorMessage}</div>
+                :
+                ''
+              }
               <form onSubmit={handleLogIn}>
                 <label htmlFor='email' className="form-label my-0">Email</label>
                 <input id='email' name='email' type="email" placeholder="Enter Your Email" className="form-control my-2" required />
@@ -145,7 +175,7 @@ export const Navigator = () => {
                   </span> : ''}
                   <span>Log in</span>
                 </button>
-                <button type="button" className="btn btn-secondary mt-2 ms-2" data-bs-dismiss="modal">Close</button>
+                <button type="button" className="btn btn-secondary mt-2 ms-2" data-bs-dismiss="modal" onClick={() => { handleErrorMessage('', false) }}>Close</button>
               </form>
             </div>
           </div>
@@ -161,10 +191,15 @@ export const Navigator = () => {
               <div className="col-11">
                 <h1 className="text-secondary">Sign Up</h1>
               </div>
-              <div className="col-1"><button ref={modalSignUpCloseBtn} type="button" className="btn btn-close bg-light" data-bs-dismiss="modal" />
+              <div className="col-1"><button ref={modalSignUpCloseBtn} onClick={() => { handleErrorMessage('', false) }} type="button" className="btn btn-close bg-light" data-bs-dismiss="modal" />
               </div>
             </div>
             <div className="modal-body">
+              {showErrorMessage ?
+                <div className='alert alert-danger'>{errorMessage}</div>
+                :
+                ''
+              }
               <form onSubmit={handleSignUp}>
                 <label className="form-label my-0" htmlFor="name">Name<span className="text-danger">*</span></label>
                 <input id='name' name='name' type="text" placeholder="Enter Your Name" className="form-control py-1 my-2" title="Please Enter Valid Name" minLength={3} pattern="^[a-zA-Z]*$" required />
@@ -200,7 +235,7 @@ export const Navigator = () => {
                       Sign Up
                     </span>
                   </button>
-                  <button type='button' className="btn btn-secondary my-3 ms-2" data-bs-dismiss="modal">Close</button>
+                  <button type='button' onClick={() => { handleErrorMessage('', false) }} className="btn btn-secondary my-3 ms-2" data-bs-dismiss="modal">Close</button>
                 </div>
                 {/* <span>Already got an account? <button data-bs-dismiss="modal">Login here</button></span> */}
               </form>
