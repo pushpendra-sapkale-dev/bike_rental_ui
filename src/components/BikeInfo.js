@@ -7,9 +7,16 @@ import { Hero } from './bike-list/Hero';
 import { Kawasaki } from './bike-list/Kawasaki';
 import * as auth from '../services/authService';
 import * as dataShareService from '../services/dataShareService';
+import { useSnackbar } from 'react-simple-snackbar';
+import * as snackbar from '../services/snackbarService';
+
 
 
 const BikeInfo = () => {
+
+  const [openSnackbarSuccess] = useSnackbar(snackbar.successStyle);
+  const [openSnackbarFail] = useSnackbar(snackbar.failStyle);
+
   let bike_name = useParams().bike_name;
   const modalPopUpBtn = React.useRef(null);
   const modalPopUpCloseBtn = React.useRef(null);
@@ -35,12 +42,14 @@ const BikeInfo = () => {
       national_id: event.target.national_id.value
     }
     dataShareService.bookBike(bookObj).then(() => {
-      alert('Bike booked successfully');
+      // alert('Bike booked successfully');
       event.target.reset();
       modalPopUpCloseBtn.current.click();
+      openSnackbarSuccess('Bike Booked Successfully');
       setBookBikeLoader(false);
-    }).catch(() => {
-      alert('Error in booking bike please try after sometime');
+    }).catch((errMsg) => {
+      // alert('Error in booking bike please try after sometime');
+      openSnackbarFail(errMsg)
       setBookBikeLoader(false);
     });
   }

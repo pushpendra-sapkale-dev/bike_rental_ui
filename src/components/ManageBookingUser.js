@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import * as dataShareService from '../services/dataShareService';
+import { useSnackbar } from 'react-simple-snackbar';
+import * as snackbar from '../services/snackbarService';
 
 export const ManageBookingUser = (props) => {
+
+  const [openSnackbarSuccess] = useSnackbar(snackbar.successStyle);
+  const [openSnackbarFail] = useSnackbar(snackbar.failStyle);
 
   const [bookingId, setBookingId] = useState('');
   let bike_list_data = props.bookingDetails;
@@ -21,6 +26,7 @@ export const ManageBookingUser = (props) => {
     let bike_list = props.bookingDetails,
       index = bike_list.findIndex((m) => m.id === bookingId);
     bike_list.splice(index, 1);
+    openSnackbarSuccess('Successfully cancelled booking');
     setBikeBookingList(updateBikeList(bike_list_data));
   }
 
@@ -29,8 +35,9 @@ export const ManageBookingUser = (props) => {
       modalPopUpCloseBtn.current.click();
       deleteBikeFromList();
     }).catch(
-      () => {
-        alert('Error in cancle booking')
+      (errMsg) => {
+        // alert('Error in cancle booking')
+        openSnackbarFail(errMsg);
       });
   }
 

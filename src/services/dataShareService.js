@@ -21,7 +21,7 @@ function bookBike(obj) {
         const regUrl = API_URL + '/book-bike';
         axios.post(regUrl, obj).then((response) => {
             if (response.status === 'Error in bike booking') {
-                rej();
+                rej(response.status);
             }
             else {
                 res();
@@ -47,11 +47,13 @@ function cancleBooking(id) {
         const reqUrl = API_URL + '/cancle-booking';
         axios.delete(reqUrl, { data: { id: id } }).then((response) => {
             if (response.status === 'Error') {
-                rej();
+                rej('Error in cancle booking please try again');
             }
             else {
-                res();  
+                res();
             }
+        }, err =>{
+            rej('Error in cancle booking please try after sometime');
         });
     });
 }
