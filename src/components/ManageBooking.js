@@ -7,15 +7,20 @@ import { ManageBookingUser } from './ManageBookingUser';
 const ManageBooking = () => {
 
   let userId = useParams().user_id;
+  const [manageBookingLoader, setManageBookingLoader] = useState(false);
 
   useEffect(() => {
     const getBikeBookingList = () => {
+      setManageBookingLoader(true);
       dataShareService.getManageBookingList({ user_id: userId }).then((data) => {
         setBikeBookingDetails(data);
         if (data.length > 0) {
           setShowTableStatus(true);
         }
-      }).catch();
+        setManageBookingLoader(false);
+      }).catch(() => {
+        setManageBookingLoader(false);
+      });
     }
     getBikeBookingList();
   }, [userId])
@@ -50,7 +55,15 @@ const ManageBooking = () => {
       </div>
       {/* Bike List Component */}
       <div className='py-5'>
-        {showTableStatus ? <ManageBookingUser bookingDetails={bikeBookingDetails} userId={userId}/> : <h3 className='text-primary text-center'>You do not have any booking !!</h3>}
+        {manageBookingLoader ?
+          <div className='text-center'>
+            <div className="spinner-border spinner-border-sm text-dark" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </div>
+          : <div>
+            {showTableStatus ? <ManageBookingUser bookingDetails={bikeBookingDetails} userId={userId} /> : <h3 className='text-primary text-center'>You do not have any booking !!</h3>}
+          </div>}
       </div>
     </div>
   )
