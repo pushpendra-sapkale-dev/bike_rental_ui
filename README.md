@@ -10,4 +10,4 @@ Bike_rental web app is developed using -
 * JavaScript
 
 
-demo - https://bike-rental-web.web.app/
+demo - https://bikerentalui.web.app/

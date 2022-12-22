@@ -8,6 +8,10 @@ export const Navigator = () => {
 
   const [isLoggedIn, setIsLoggedIn] = useState(null);
 
+  const [logInLoader, setLogInLoader] = useState(false);
+
+  const [signUpLoader, setSignUpLoader] = useState(false);
+
   useEffect(() => {
     setIsLoggedIn(auth.loginCheckOnly());
   }, []);
@@ -34,6 +38,7 @@ export const Navigator = () => {
 
   function handleLogIn(event) {
     event.preventDefault();
+    setLogInLoader(true);
     const userObj = {
       email: event.target.email.value,
       password: event.target.password.value
@@ -41,13 +46,16 @@ export const Navigator = () => {
     // Validations and logic is in auth service
     auth.loginCheck(userObj, modalCloseBtn, event).then(() => {
       setIsLoggedIn(auth.loginCheckOnly());
+      setLogInLoader(false);
     }).catch(() => {
-      console.log('Error In Login .....')
+      console.log('Error In Login .....');
+      setLogInLoader(false);
     });
   }
 
   function handleSignUp(event) {
     event.preventDefault();
+    setSignUpLoader(true);
     const userObj = {
       name: event.target.name.value,
       lastname: event.target.lastname.value,
@@ -59,9 +67,13 @@ export const Navigator = () => {
       date: event.target.date.value
     }
     // All the validations and logics are in auth service
-    auth.signUpCheck(userObj, modalSignUpCloseBtn, event).then(()=>{
+    auth.signUpCheck(userObj, modalSignUpCloseBtn, event).then(() => {
       setIsLoggedIn(auth.loginCheckOnly());
-    }).catch(console.log('Error in signup .....'));
+      setSignUpLoader(false);
+    }).catch(() => {
+      console.log('Error in signup .....');
+      setSignUpLoader(false);
+    });
   }
 
   return (
@@ -99,7 +111,7 @@ export const Navigator = () => {
                 <a className="nav-link px-3" href="/#" data-bs-toggle="modal" data-bs-target="#login">Login/register</a>
                 <span></span>
               </li> : null}
-              {isLoggedIn ? <ProfileLogo handleLoggedOutStatus={handleLoggedOutStatus} /> : null}
+              {isLoggedIn ? <div className='d-flex align-items-center justify-content-center'><span><ProfileLogo handleLoggedOutStatus={handleLoggedOutStatus} /></span></div> : null}
             </ul>
           </div>
         </div>
@@ -125,7 +137,14 @@ export const Navigator = () => {
                 <input id='password' name='password' type="password" placeholder="Enter Your Password" className="form-control my-2 mb-3" required />
                 <a href="/#" className data-bs-toggle="modal" data-bs-target="#signup">Don't have a account ?</a>
                 <div className="col"><a href="/#" className>Forgot password ?</a></div>
-                <button type="submit" className="btn btn-success mt-2">Log in</button>
+                <button disabled={logInLoader} type="submit" className="btn btn-success mt-2">
+                  {logInLoader ? <span className='me-2'>
+                    <div className="spinner-border spinner-border-sm text-dark" role="status">
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
+                  </span> : ''}
+                  <span>Log in</span>
+                </button>
                 <button type="button" className="btn btn-secondary mt-2 ms-2" data-bs-dismiss="modal">Close</button>
               </form>
             </div>
@@ -171,8 +190,17 @@ export const Navigator = () => {
                 <input type="checkbox" required className="form-check-input mt-2" />
                 <label className="mt-1">I Agree With <a href="/#">Terms &amp; conditions</a></label>
                 <div className="col-12">
-                  <input type="submit" defaultValue="Sign Up" className="btn btn-success my-3" />
-                  <button className="btn btn-secondary my-3 ms-2" data-bs-dismiss="modal">Close</button>
+                  <button disabled={signUpLoader} type='submit' className="btn btn-success my-3" >
+                    {signUpLoader ? <span className='me-2'>
+                      <div className="spinner-border spinner-border-sm text-dark" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                      </div>
+                    </span> : ''}
+                    <span>
+                      Sign Up
+                    </span>
+                  </button>
+                  <button type='button' className="btn btn-secondary my-3 ms-2" data-bs-dismiss="modal">Close</button>
                 </div>
                 {/* <span>Already got an account? <button data-bs-dismiss="modal">Login here</button></span> */}
               </form>

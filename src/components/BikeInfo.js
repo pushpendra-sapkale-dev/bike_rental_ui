@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Royal } from './bike-list/Royal';
 import { Himalayan } from './bike-list/Himalayan';
@@ -13,6 +13,7 @@ const BikeInfo = () => {
   let bike_name = useParams().bike_name;
   const modalPopUpBtn = React.useRef(null);
   const modalPopUpCloseBtn = React.useRef(null);
+  const [bookBikeLoader, setBookBikeLoader] = useState(false);
 
   // Getting open modal type status from child components
   function getOpenModalType() {
@@ -24,6 +25,7 @@ const BikeInfo = () => {
   function submitBooking(event) {
     event.preventDefault();
     console.log(event.target.value);
+    setBookBikeLoader(true);
     const bookObj = {
       user_id: auth.getUserId(),
       bike_name: bike_name,
@@ -36,8 +38,10 @@ const BikeInfo = () => {
       alert('Bike booked successfully');
       event.target.reset();
       modalPopUpCloseBtn.current.click();
+      setBookBikeLoader(false);
     }).catch(() => {
       alert('Error in booking bike please try after sometime');
+      setBookBikeLoader(false);
     });
   }
 
@@ -100,7 +104,18 @@ const BikeInfo = () => {
                 <label htmlFor='national-id' className="form-label mt-2 mx-auto">National Id<span className="text-danger"> *</span></label>
                 <input id='national-id' name='national_id' type="text" placeholder="Enter Your National Id Number Here" className="form-control" required />
               </div>
-              <input type="submit" defaultValue="Submit" className="mt-4 mb-3 btn btn-success rounded-pill px-md-5" />
+              <button disabled={bookBikeLoader} type='submit' className="mt-4 mb-3 btn btn-success rounded-pill px-md-5">
+                <span>
+                  {bookBikeLoader ? <span className='me-2'>
+                    <div className="spinner-border spinner-border-sm text-dark" role="status">
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
+                  </span> : ''}
+                </span>
+                <span>
+                  Book Bike
+                </span>
+              </button>
               <button type='button' ref={modalPopUpCloseBtn} data-bs-dismiss="modal" className='ms-3 mb-3 mt-4 px-md-5 rounded-pill btn btn-secondary'>Close</button>
             </form>
           </div>
